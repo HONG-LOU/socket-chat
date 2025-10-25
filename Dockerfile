@@ -13,10 +13,18 @@ WORKDIR /app
 COPY pyproject.toml README.md ./
 COPY server ./server
 
-# 安装依赖
-RUN pip install --no-cache-dir uv \
-    && uv pip install --no-deps -i https://mirrors.aliyun.com/pypi/simple fastapi uvicorn[standard] sqlalchemy psycopg2-binary pydantic pydantic-settings passlib pyjwt python-multipart \
-    && uv pip install -i https://mirrors.aliyun.com/pypi/simple -e .
+# 安装依赖（使用国内源，不创建虚拟环境，减小构建复杂度）
+RUN pip install --no-cache-dir \
+      fastapi \
+      "uvicorn[standard]" \
+      sqlalchemy \
+      psycopg2-binary \
+      pydantic \
+      pydantic-settings \
+      passlib \
+      pyjwt \
+      python-multipart \
+      email-validator
 
 EXPOSE 8000
 
