@@ -7,14 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# 安装构建依赖（psycopg2 需要）
-RUN set -eux; \
-    printf "deb http://mirrors.tuna.tsinghua.edu.cn/debian bookworm main contrib non-free non-free-firmware\n" > /etc/apt/sources.list; \
-    printf "deb http://mirrors.tuna.tsinghua.edu.cn/debian bookworm-updates main contrib non-free non-free-firmware\n" >> /etc/apt/sources.list; \
-    printf "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware\n" >> /etc/apt/sources.list; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends build-essential gcc libpq-dev; \
-    rm -rf /var/lib/apt/lists/*
+# 依赖均使用 Python 轮子（包含 psycopg2-binary），无需系统编译依赖，减少构建体积与耗时
 
 # 复制依赖定义与源码
 COPY pyproject.toml README.md ./
@@ -22,7 +15,8 @@ COPY server ./server
 
 # 安装依赖
 RUN pip install --no-cache-dir uv \
-    && uv pip install -e .
+    && uv pip install --no-deps -i https://mirrors.aliyun.com/pypi/simple fastapi uvicorn[standard] sqlalchemy psycopg2-binary pydantic pydantic-settings passlib pyjwt python-multipart \
+    && uv pip install -i https://mirrors.aliyun.com/pypi/simple -e .
 
 EXPOSE 8000
 
