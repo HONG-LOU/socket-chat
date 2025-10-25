@@ -63,3 +63,20 @@ uv pip install -e .
 uv run python -m server.main
 uv run python -m client.main
 ```
+
+Docker 一键运行
+----------------
+```bash
+# 构建并启动（首次会拉取镜像并构建 app）
+docker compose up -d --build
+
+# API 将暴露在 http://127.0.0.1:8000
+# WebSocket 在 ws://127.0.0.1:8000/ws
+
+# 设置客户端指向容器服务（在本机运行客户端时）：
+# Windows PowerShell
+$env:API_BASE = "http://127.0.0.1:8000"; $env:WS_URL = "ws://127.0.0.1:8000/ws"; uv run python -m client.main
+
+# 停止/清理
+docker compose down
+```

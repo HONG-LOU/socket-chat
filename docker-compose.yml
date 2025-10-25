@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: dbp6d1b1f4a0b3c4d55
+      POSTGRES_DB: socket_chat
+    volumes:
+      - socket_chat_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d socket_chat"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:dbp6d1b1f4a0b3c4d55@db:5432/socket_chat
+      - JWT_SECRET=8f52a3c1e7b941a7af63e29dbab8a8b0f0d3b9a23da0f6b7e3c6d5f12b8a9c4d
+      - JWT_ALG=HS256
+      - JWT_EXPIRE_MINUTES=60
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+volumes:
+  socket_chat_db:
