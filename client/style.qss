@@ -1,0 +1,87 @@
+/* 全局基础 */
+QWidget {
+  background: #0e1016;
+  color: #e6e8ef;
+  font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 14px;
+}
+
+QLineEdit, QTextEdit, QListWidget, QComboBox {
+  background: #151823;
+  border: 1px solid #23283b;
+  border-radius: 8px;
+  padding: 8px 10px;
+  selection-background-color: #2e6df6;
+}
+
+QPushButton {
+  background: #2a3252;
+  border: 1px solid #3b4570;
+  border-radius: 8px;
+  padding: 8px 14px;
+}
+QPushButton:hover { background: #343d63; }
+QPushButton:pressed { background: #2b3358; }
+
+/* 卡片容器 */
+#Card {
+  background: #121521;
+  border: 1px solid #22263a;
+  border-radius: 14px;
+}
+
+/* 顶部栏 */
+#TopBar {
+  background: #0f1422;
+  border-bottom: 1px solid #1e2743;
+}
+#TopBar QLabel#Title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 好友列表：分隔线与边界感 */
+QListWidget#FriendsList {
+  outline: none;
+  border: 1px solid #23283b;
+  border-radius: 10px;
+  background: #121624;
+}
+QListWidget#FriendsList::item {
+  padding: 12px 14px;
+  border-bottom: 1px solid #1e2440;
+}
+QListWidget#FriendsList::item:last-child {
+  border-bottom: none;
+}
+QListWidget#FriendsList::item:selected {
+  background: #19213a;
+}
+
+/* 聊天气泡容器 */
+QFrame#BubbleMe {
+  background: #3b6df0;
+  border-radius: 12px;
+  padding: 8px 12px;
+  color: #ffffff;
+}
+QFrame#BubbleMe QLabel { background: transparent; color: #ffffff; }
+QFrame#BubblePeer {
+  background: #171c2b;
+  border-radius: 12px;
+  padding: 8px 12px;
+  color: #dfe3f1;
+  border: 1px solid #232d4b;
+}
+QFrame#BubblePeer QLabel { background: transparent; color: #dfe3f1; }
+
+/* 聊天区域背景与文本协调 */
+QWidget#ChatArea {
+  background: #0f1422;
+}
+
+/* 滚动区域视口透明，避免出现黑底 */
+QAbstractScrollArea, QScrollArea { background: transparent; }
+QWidget#qt_scrollarea_viewport { background: transparent; }
+
+
